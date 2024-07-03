@@ -1,113 +1,151 @@
+"use client"
+
 import Image from "next/image";
+import BG from './bg.png';
+import Link from "next/link";
+import { useState } from "react";
+import Draggable from "react-draggable";
+import { motion } from 'framer-motion';
 
 export default function Home() {
+
+  const [isDragging, setIsDragging] = useState(false)
+  
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <main className="h-screen">
+
+      <Image
+        src={BG}
+        alt="bg-image"
+        className="fixed top-0 left-0 h-screen object-cover"
+      />
+
+
+      {/* main component */}
+      <div className="relative z-10 h-screen flex items-center justify-center flex-col p-5">
+
+        <Draggable
+          handle=".handle"
+          bounds="parent"
+          onStart={() => setIsDragging(true)}
+          onStop={() => setIsDragging(false)}
+        >
+          <div>
+            <motion.div
+              animate={{ scale: isDragging ? 0.95 : 1, }}
+            >
+              {/* query-response window */}
+              <div
+                className="w-[450px] h-[480p-x] overflow-hidden p-4 bg-[#808080] backdrop-blur-[100px] bg-opacity-20"
+                style={{ borderRadius: 34 }}
+              >
+
+                {/* query */}
+                <div className="bg-[#000] bg-opacity-50 p-4 rounded-[18px] backdrop-blur-[100px] flex">
+                  Pull up top news from wwdc 24
+                </div>
+
+                {/* response */}
+                <div className="mt-4 p-3 leading-7 space-y-4">
+                  <p>Here are some of the top news from WWDC 24:</p>
+                  <p>
+                    1.	WWDC24 will spotlight the latest advancements in iOS, iPadOS, macOS, watchOS, tvOS, and visionOS.
+                    <Link href={'/'} className="opacity-60 underline pl-1">Apple Developer</Link> <br />
+                    2.	Apple introduced artificial intelligence updates during WWDC, including updates on AI products.
+                    <Link href={'/'} className="opacity-60 underline pl-1">CNN</Link><br />
+                    3.	WWDC24 keynote introduced Apple Intelligence, a personal intelligence designed to be helpful and relevant.
+                    <Link href={'/'} className="opacity-60 underline pl-1">Apple - YouTube</Link>
+                  </p>
+                </div>
+
+                {/* response-info */}
+                <div className="flex justify-between opacity-50 px-3 text-sm mt-10">
+                  <p>GPT-4o</p>
+                  <p>1.2 sec</p>
+                </div>
+
+              </div>
+
+              {/* navigation (next-previous) */}
+              <div className="py-4 flex justify-between">
+
+                {/* previous btn */}
+                <button className="bg-[#808080] hover:bg-opacity-50 duration-200 bg-opacity-30 w-36 h-10 rounded-full backdrop-blur-[100px] flex justify-center items-center gap-1">
+                  <svg width="25" height="24" className="size-[18px] opacity-70" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11 19.5L3.5 12M3.5 12L11 4.5M3.5 12H21.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span className="opacity-70">
+                    Previous
+                  </span>
+                </button>
+
+                {/* next btn */}
+                <button className="bg-[#808080] hover:bg-opacity-50 duration-200 bg-opacity-30 w-36 h-10 rounded-full backdrop-blur-[100px] flex justify-center items-center gap-1">
+                  <span className="opacity-70">
+                    Next
+                  </span>
+                  <svg width="25" height="24" className="size-[18px] rotate-180 opacity-70" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11 19.5L3.5 12M3.5 12L11 4.5M3.5 12H21.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* input */}
+              <div className="bg-[#fff] bg-opacity-10 p-4 py-3 justify-between rounded-[24px] backdrop-blur-[100px] flex">
+                <p className="flex items-center">
+                  More details on macOS |
+                  <span className="pl-1 opacity-60">updates</span>
+                </p>
+
+                <button className="rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 duration-200 w-12 h-12 flex items-center justify-center">
+                  <svg width="32" height="32" className="size-5" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M26 14L16 4M16 4L6 14M16 4L16 28" stroke="#F7F7F7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+
+                </button>
+
+              </div>
+            </motion.div>
+
+            {/* draggable */}
+            <div className="flex mt-5 justify-center">
+              <button
+                className="scale-75 handle opacity-30 active:opacity-65 duration-300"
+              >
+                <svg width="174" height="16" viewBox="0 0 174 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g filter="url(#filter0_b_15_8)">
+                    <rect x="38" y="3" width="136" height="10" rx="5" fill="white" />
+                  </g>
+                  <g filter="url(#filter1_b_15_8)">
+                    <rect y="1" width="14" height="14" rx="7" fill="white" />
+                  </g>
+                  <defs>
+                    <filter id="filter0_b_15_8" x="18" y="-17" width="176" height="50" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                      <feGaussianBlur in="BackgroundImageFix" stdDeviation="10" />
+                      <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_15_8" />
+                      <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_15_8" result="shape" />
+                    </filter>
+                    <filter id="filter1_b_15_8" x="-20" y="-19" width="54" height="54" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                      <feGaussianBlur in="BackgroundImageFix" stdDeviation="10" />
+                      <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_15_8" />
+                      <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_15_8" result="shape" />
+                    </filter>
+                  </defs>
+                </svg>
+              </button>
+            </div>
+
+          </div>
+        </Draggable>
+
+
+
+
       </div>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
     </main>
   );
 }
